@@ -1,0 +1,73 @@
+---
+# tasks file for backup
+
+- include: epel.yml
+  when: use_internal_epel_yumrepo is defined
+
+- name: Install Duplicity agent dependecies
+  yum: name="{{duplicity.dependencies}}" state=installed update_cache=yes
+
+- name: Install Azure SDK
+  pip: name=azure version=1.0.3
+
+- name: Download Duplicity package
+  get_url: url={{duplicity.download_server}}/{{duplicity.package_name}} dest=/opt/{{duplicity.package_name}} validate_certs=no
+
+- name: Unarchive Duplicity agent
+  unarchive: src=/opt/{{duplicity.package_name}} dest=/opt/ remote_src=True
+  
+- name: Check Agent staus
+  stat: path=/bin/duplicity
+  register: dup
+
+- name: Install Duplicity agent
+  shell: "python setup.py install"
+  args:
+    chdir: /opt/duplicity-{{duplicity.package_version}}
+  when: dup.stat.exists != True
+
+- name: Install Duply script
+  template: src=duply.sh.j2 dest=/usr/local/bin/duply owner=root group=root mode=0755
+
+- name: Duply directories for profile and logs
+  file: name={{item}} state=directory owner=root group=root mode=0755
+  with_items: ["/etc/duply", "var/log/duply"]
+
+- name: Check if profile exist
+  stat: path=/etc/duply/{{duplicity.server_profile}}/conf
+  register: duplyprofile
+
+- name: Backup profile generation
+  shell: "/usr/local/bin/duply {{duplicity.server_profile}} create"
+  when: duplyprofile.stat.exists != True
+
+- name: Create basic profile
+  template: src=backupconf.j2 dest=/etc/duply/{{duplicity.server_profile}}/conf owner=root group=root mode=0600
+
+- name: Copy GPG Public key
+  copy: content="{{duplicity.gpgpublic_key}}" dest="/etc/duply/{{duplicity.server_profile}}/gpgkey.{{duplicity.gpg_key_id}}.pub.asc" mode=0600 owner=root group=root
+
+- name: Copy GPG Signing key
+  copy: content="{{duplicity.gpgsign_key}}" dest="/etc/duply/{{duplicity.server_profile}}/gpgkey.{{duplicity.gpg_key_id}}.sec.asc" mode=0600 owner=root group=root
+
+- name: Test GPG Keys
+  command: "gpg --list-keys"
+  register: result
+
+- name: Register GPG keys
+  shell: "gpg --import gpgkey.{{duplicity.gpg_key_id}}.pub.asc;gpg --import gpgkey.{{duplicity.gpg_key_id}}.sec.asc"
+  when: result.stdout == ""
+  ignore_errors: true
+  args:
+     chdir: /etc/duply/{{duplicity.server_profile}}/
+
+- name: Add backup Source
+  lineinfile:
+   dest: /etc/duply/{{duplicity.server_profile}}/conf
+   regexp: "{{item.value.regex}}"
+   line: "{{item.value.line}}"
+  with_dict: "{{ conf }}"
+
+- name: Run a backup
+  shell: "export AZURE_ACCOUNT_KEY=='{{container_key}}'; export AZURE_ACCOUNT_NAME='{{container_name}}' ;/usr/local/bin/duply {{duplicity.server_profile}} full_verify_purge --force"
+  tags: 'runbackup'

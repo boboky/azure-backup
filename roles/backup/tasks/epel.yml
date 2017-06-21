@@ -1,0 +1,3 @@
+# Create a EPEL Yum repo on Clients only if it does not exsit
+- name: Add EPEL repo
+  template: src=epel.repo.j2 dest=/etc/yum.repos.d/epel.repo owner=root group=root mode=0644

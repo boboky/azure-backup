@@ -1,0 +1,138 @@
+---
+
+duplicity:
+ dependencies:
+    - gcc
+    - python-devel
+    - librsync-devel
+    - python-lockfile-0.9.1
+    - python-pip
+ download_server: 'https://nexus2:8443/nexus/service/local/repositories/cots-el7/content/duplicity/duplicity/0.7.06.tar'
+ package_name: 'duplicity-0.7.06.tar.gz'
+ package_version: '0.7.06'
+ server_profile: 'test'
+ gpg_key_id: '08E1AED3'
+ #This will be encryopted with Ansible Vauilt or Pulled from Azure KeyVault and sent to Ansible via Jenkins
+ gpgpublic_key: |
+   -----BEGIN PGP PUBLIC KEY BLOCK-----
+   mQENBFj3gFEBCADdMk5ijrET6b1TBXxmMKLdkAJxzA4DRudxASV4g/I957+aWC4D
+   4lBPbakEluDCIog55ihmmshdxqjPSPF5+LgtTZOTRVob+1jErmz5/c2rkdRio3Ei
+   PoS/E4rXx/+0ux5Xzru0doe+TzF+KZ5BG3UeUJsXRcj8179NVA8o1dAwmFYUKMUn
+   Lh+HXKfjmBEj5Dlfx4jGM1n5bfvTk0yCfhZaI4kwkNCn/KtZb00+JdtDZcHHWH5r
+   JUenJIWncKxRqmMNMIRhxscPZnQyLW36cojls3DDWP08RYnGJUfIg/z7He5Lpg9u
+   pZ+xH5MB7wdBuQnJt0o/QUFkFuXzqqrfrm+DABEBAAG0EkR1cGxpY2l0eSBUZXN0
+   IEtleYkBOQQTAQIAIwUCWPeAUQIbAwcLCQgHAwIBBhUIAgkKCwQWAgMBAh4BAheA
+   AAoJELPlRvgI4a7TUEgH/2o84sqS0+ooLf9vF8F+J0cblzmWQi2H7gagJnRWEgfa
+   0t0TPOTczdIDCWu161YLJGUVKFa7ZZaxBjgfJlinoByPc5g29rZLLYanvK38Upj+
+   hGrW6+tujL3mrjvVqEbniAJ/1dwHj4bk+I1KjbSc+lz75GmNw7v4DlSi0Lwq0xDw
+   7JKJVG47oKJpjYVXLIOq8uMkT842TrfQiTWwf6GsTNFX5yBIC0CsZyBmF7yM80AX
+   9GhGRVvTh1mHeUcjiVkFTXnPD2dllYY1innJDXxioVGeuciJt5v8o0R9r/TDxyQW
+   qyrLjRfTMQj0ugkNespHK+zwSXDM/NSXw69PtBYcHMa5AQ0EWPeAUQEIAMtYggbx
+   HPl9qEF1p1bj9YYMAP5+9t0t4UE5z6la5Cg/8/FXwDsGXMXOz/BGXa95EqSzNr8p
+   EwIrqjgOebRIHZcbIuEBrOOYMhtW7rBIVGg5gv4N2+toleyNgkFsYKA7Mr9/Dipi
+   NiVl8crXUaU+lzHhJTC/7efTUQg+JdxdASBdbFx4axhoiT9x0zXcp5yKSVETwsc4
+   lG+ROrbc55GbvljQ2WDQzEEkSPWFZjh4/aTIuG/hrHOyslK5JcVtpIaNbEMIAdYu
+   LAekFTO6h0fXiouXgl5SfUHxU7vIFx8USOxx4612rFKOmD5YbHPA+n3bAbvZlv4L
+   qqsfpZeywowSusEAEQEAAYkBHwQYAQIACQUCWPeAUQIbDAAKCRCz5Ub4COGu03fu
+   B/4qgDMLIi5FKsoG2eXl1WqfzzA6srm4AtNOS2HKWOTlci4/sJjLxBlJN7nBSb/J
+   e4GeIfGVYOqHLfs2EAJzL2FO4/j5xNThQrHAYjA9Ic4QyFbSj8xOUIlrpgZNB8A3
+   avpH6vhsCGWceGSGhiN/fa/UnHhXXDq7fx1BwaZ1yjw5trNmO4cLaH96xx7t/fWt
+   wEVZPvgwZxfWnCB0E9FWHTUxXa2sYnVY269o+xjfK6BYPcaXlA0E3w2DfSI1uba/
+   4jESs8iTWG81d9CwfRrc5Gsvs+bU9csN0VdkZ3qiQAw0OqmNGalj64g7dUT2cz22
+   yt0F/AfdfJMBrpdb6BJKqXYl
+   =Wej4
+   -----END PGP PUBLIC KEY BLOCK-----
+
+ # This will be encrypted with Ansible Vauilt or Pulled from Azure KeyVault and sent to Ansible via Jenkins
+ gpgsign_key: |
+   -----BEGIN PGP PRIVATE KEY BLOCK-----
+   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
+   Sql2JQ==
+   =FUXJ
+   -----END PGP PRIVATE KEY BLOCK-----
+
+conf:
+  source:
+    regex: "^SOURCE"
+    line: "SOURCE='/var/log'"
+  age:
+    regex: "^MAX_AGE"
+    line: "MAX_AGE=2M"
+  fullbackup:
+    regex: "^MAX_FULL_BACKUPS"
+    line: "MAX_FULL_BACKUPS=2"
+  fullincr:
+    regex: "^MAX_FULLS_WITH_INCRS"
+    line: "MAX_FULLS_WITH_INCRS=2"
+  fullbackupage:
+    regex: "^MAX_FULLBKP_AGE"
+    line: "MAX_FULLBKP_AGE=1M"
+  duplprama:
+    regex: '^DUPL_PARAMS'
+    line: 'DUPL_PARAMS="$DUPL_PARAMS --full-if-older-than $MAX_FULLBKP_AGE"'
+  target:
+    regex: "^TARGET"
+    line: "TARGET='azure://testbackups'"
+ #This one does not require to be encrypted. It's just the Key ID and not the actual Key file
+  gpg_key_id:
+    regex: "^GPG_KEYS_ENC"
+    line:  "GPG_KEYS_ENC='08E1AED3'"
+  gpg_key_sign:
+    regex: "^GPG_KEY_SIGN"
+    line: "GPG_KEY_SIGN='08E1AED3'"
+ # This should be protected by vault.
+  gpg_key_passphrase:
+    regex: "^GPG_PW"
+    line: "GPG_PW='Blue1Sky'"

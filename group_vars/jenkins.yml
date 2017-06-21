@@ -1,0 +1,36 @@
+---
+
+gpg_key_id: '08E1AED3'
+conf:
+  source:
+    regex: "^SOURCE"
+    line: "SOURCE='/var/lib/jenkins'"
+  age:
+    regex: "^MAX_AGE"
+    line: "MAX_AGE=2M"
+  fullbackup:
+    regex: "^MAX_FULL_BACKUPS"
+    line: "MAX_FULL_BACKUPS=2"
+  fullincr:
+    regex: "^MAX_FULLS_WITH_INCRS"
+    line: "MAX_FULLS_WITH_INCRS=2"
+  fullbackupage:
+    regex: "^MAX_FULLBKP_AGE"
+    line: "MAX_FULLBKP_AGE=1M"
+  duplprama:
+    regex: '^DUPL_PARAMS'
+    line: 'DUPL_PARAMS="$DUPL_PARAMS --full-if-older-than $MAX_FULLBKP_AGE"'
+  target:
+    regex: "^TARGET"
+    line: "TARGET='azure://testbackups'"
+ #This one does not require to be encrypted. It's just the Key ID and not the actual Key file
+  gpg_key_id:
+    regex: "^GPG_KEYS_ENC"
+    line:  "GPG_KEYS_ENC='08E1AED3'"
+  gpg_key_sign:
+    regex: "^GPG_KEY_SIGN"
+    line: "GPG_KEY_SIGN='08E1AED3'"
+ # This should be protected by vault.
+  gpg_key_passphrase:
+    regex: "^GPG_PW"
+    line: "GPG_PW='Blue1Sky'"
